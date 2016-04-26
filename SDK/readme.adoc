@@ -1,0 +1,137 @@
+:imagesdir: images/
+
+[[Restcomm_MayDay_SDK]]
+= Restcomm MayDay Web SDK 
+
+Mayday application, like the popular Amazon’s feature in their Kindle Fire Tablets is a remote support and instant helpline.
+The application is implemented by SPAN on Web, iOS and Android using Telestax’s Restcomm SDK for WebRTC.
+
+==== Prerequisites
+
+•	Restcomm Communications Platform
+
+•	Tomcat 7 and above
+
+•	Restcomm MayDay SDK
+
+==== Restcomm Communications Platform
+
+Install the latest Restcomm Docker image locally (i.e. $ docker pull mobicents/restcomm to get it from docker hub).
+For more information please check http://www.telestax.com/rapid-webrtc-application-development-with-restcomm-and-docker/ and https://github.com/RestComm/Restcomm-Docker#restcomm-docker-image. If you aren’t familiar with docker you can have a quick intro here https://www.docker.com/
+
+==== Tomcat 7 and above
+
+Downlaod the latest tomcat from https://tomcat.apache.org/
+
+==== Restcomm MayDay SDK
+
+Once you have installed the Restcomm platform you are ready to start taking advantage of Restcomm’s features from your Web Apps.
+
+Clone the git repository from https://github.com/RestComm/Restcomm-Mayday.git and navigate to /web/SDK/
+
+----
+$git clone https://github.com/RestComm/Restcomm-Mayday.git
+----
+
+==== To integrate/develop Audio, Video and Chat
+
+Please reffer RestComm WebRTC JavaScript SDK - https://github.com/RestComm/webrtcomm/wiki/Restcomm-WebRTComm-Quick-Start
+
+
+==== To integrate/develop MayDay widget
+
+This widget developed by SPAN and to integrate add the files as mentioned
+
+*Required JavaScript and CSS fiels*
+
+.javascript
+----
+-   js/jquery.min.js
+-   js/jquery.toolbar.js
+-   js/jquery-ui.js
+-   js/span_widget.js
+----
+
+.css
+----
+-   css/jquery-ui.css
+-   css/documentation.css
+-   css/jquery.toolbars.css
+-   css/bootstrap.icons.css
+----
+
+Copy and Paste the HTML code - in the file in which you want to integrate the MayDay widget
+
+
+----
+<div id="drag">
+			<div style="position: absolute; right: 7%; top: 31%">
+				<div id="normal-button" class="settings-button"
+					style="position: absolute; right: 1%; z-index: 999999999;">
+					<img src="img/mayday_48.png" />
+				</div>
+			</div>
+
+			<div id="user-options" class="toolbar-icons" style="display: none;">
+				<a href="#" id="video-panel" onclick=" return spanCall(true);"
+					data-toggle="tooltip" title="Video Call"><i
+					class="fa fa-video-camera"></i></a> <a href="#" id="dail-textbox"
+					onclick=" return spanCall(false);" data-toggle="tooltip"
+					title="Audio Call"><i class="fa fa-microphone"></i></a> <a href="#"
+					id="chat_popup" onclick=" return chat_pop();" data-toggle="tooltip"
+					title="Insant Message"><i class="fa fa-comment"></i></a> <a
+					href="#" id="share_pdf" onclick="return showPdfScreen();"
+					data-toggle="tooltip" title="Pdf Share"><i
+					class="fa fa-share-square-o"></i></a> <a href="#" id="hide-video-panel"
+					onclick="callHangUp();" data-toggle="tooltip" title="End Call"><i
+					class="fa fa-ban"></i></a>
+			</div>
+
+			<div id="video-options" class="toolbar-icons"
+				style="display: none; z-index: 999999999; position: absolute; width: 300px; height: 176px; right: 1%; top: 0%;">
+				<video width="100%" height="100%" id="remoteVideo" autoplay controls>
+					Your browser does not support the video tag.
+				</video>
+				<!--  For Local video -->
+				<!-- <video src="" id="localVideo" autoplay="autoplay" style="margin:0 0 5px 0px;height:225px;width:400px" class="img-responsive" style="display:none;"></video>
+			 -->
+			</div>
+		</div>
+----
+
+==== To integrate/develop PDF file sharing
+
+This feature enables user to share the pdf file by drag and drop on the screen through Restcomm Datachannel API’s.
+
+*Required JavaScript fiels*
+
+.javascript
+----
+-	js/pdf.min.js
+-	js/span_screenShare.js
+----
+
+In span_screenShare.js file search for *_"//CHANGE ME: Specify the PDF share DIV id"_* and provide the PDF file share DIV id.
+
+
+==== To integrate Co-Browsing
+
+This feature enables co-browsing between the two parties and this developed using third party javascript framework https://togetherjs.com/, by using this one user able to share screen to other and do the annotation through Restcomm Datachannel API's.
+
+*Required fiels*
+
+.javascript
+----
+-   togetherjs - folder
+-   togetherjs/togetherjs-min.js
+-   js/cobrowsing.js
+-   js/together_canvas.js
+----
+
+If running local togetherjs instance then give the local path in
+
+togetherjs-min.js – defaultHubBase=” local path of nodejs server”
+
+If using cloud togetherjs then give dafaultHubBase=” https://hub.togetherjs.com”
+
+For more details about Co-Browsing refer https://togetherjs.com/

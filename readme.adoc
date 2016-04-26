@@ -1,0 +1,129 @@
+:imagesdir: doc/images/
+
+[[_getting_started_with_RestComm_MayDay_Web_Application_Configuration]]
+= RestComm - MayDay Web Application Deployment and Configuration 
+
+Mayday application, like the popular Amazon’s feature in their Kindle Fire Tablets is a remote support and instant helpline.
+The application is implemented by SPAN on iOS and Android using Telestax’s Restcomm SDK for WebRTC.
+
+
+==== Prerequisites
+
+•	Restcomm Communications Platform
+
+•	Tomcat 7 and above
+
+==== Restcomm
+
+Install the latest Restcomm Docker image locally (i.e. $ docker pull mobicents/restcomm to get it from docker hub).
+For more information please check http://www.telestax.com/rapid-webrtc-application-development-with-restcomm-and-docker/ and https://github.com/RestComm/Restcomm-Docker#restcomm-docker-image. If you aren’t familiar with docker you can have a quick intro here https://www.docker.com/
+
+
+==== To build and deploy RestComm MayDay web Client into Tomcat server
+
+. Run the tomcat in HTTPS mode (without this Chrome will not establish WebRTC call).
+. Run the Maven build as package this will generate MayDay.war (in target folder)
+. Copy the MayDay.war into <TOMACT-HOME>/webapps folder
+. Run the startup.bat or startup.sh
+. Open the Chrome browser
+
+* Agent Page - https:// IP:HTTPS_PORT /MayDay/Agent-Login.html
+* Customer Page - https:// IP:HTTPS_PORT /MayDay/Cust-Login.html
+
+. Use Customer as "*alice*" and Agent as "*test*"
+
+==== About MayDay Widget 
+
+*A simple Mayday Widget is provided*
+
+            ** Which is used to initiate Mayday Video, Audio, Chat and PDF file sharing.
+            ** The Video can be dragged anywhere and can fit to any web page.
+            
+*PDF File Sharing*	
+
+Agent can share the PDF file with the customer over WebRTC Data Channel.
+
+*Co-Browsing* 
+
+This feature enables agent can see customer screen and do the annotation on the customer screen.
+    
+==== MayDay Web Application Features and Call flow
+
+1: *Login as Customer*– 
+
+https://IP:HTTPS_PORT/MayDay/Cust-Login.html - Login as "*alice*" and password as "*1234*"
+
+2: *Login as Agent*-
+
+https://IP:HTTPS_PORT/MayDay/Agent-Login.html - Login as "*test*" and password as "*1234*"
+
+3: *Customer Screen - Click on MayDay Widget*
+
+image::MayDay_Widget_Options.png[align="center"]
+
+{nbsp} +
+
+4:	*Customer Screen - To initiate video call click on the video button which will established call with agent.*
+
+image::Customer_call.JPG[align="center"]
+
+{nbsp} +
+
+5:	*Agent Screen - Incoming call.*
+
+image::Agent_InComming_Call.JPG[align="center"]
+
+{nbsp} +
+
+6:	*Customer Screen – To establish chat between Customer and Agent*
+
+image::Custoemr_Chat.JPG[align="center"]
+
+{nbsp} +
+
+7:	*Agent Screen – Chat*
+
+image::Agent_Chat.JPG[align="center"]
+
+{nbsp} +
+
+8:	*Agent Screen – Click on the PDF button on Widget – which populate slide window and drag and drop the PDF file, which agent want to share PDF with customer.*
+ *Navigate the PDF file by clicking the navigation buttons.*
+ 
+image::Agent_PDF_Share.JPG[align="center"]
+
+{nbsp} +
+
+9:	*Customer Screen – PDF file*
+
+image::Custoemr_PDF.JPG[align="center"]
+
+{nbsp} +
+
+10:	*Agent Screen – Agent can request for Co-Browsing by clicking Customer Screen side button and click on link “Request For Co-Browsing”*
+
+image::Agent_co_browsing.JPG[align="center"]
+
+{nbsp} +
+
+11:	*Customer Screen – Accept the Co-Browsing request  from the Agent.*
+
+image::Customer_Co_browsing_request.JPG[align="center"]
+
+{nbsp} +
+
+12:	*Agent Screen – After the request accepted from the customer, agent can see customer screen.*
+
+image::AGent_CO_browsing_shared_screen.JPG[align="center"]
+
+{nbsp} +
+
+13:	*Agent Screen – Agent can enable the annotation and do the marking on customer screen.*
+
+image::AGent_Annotation.JPG[align="center"]
+
+{nbsp} +
+
+14:	*Customer Screen – Marking done by the agent, customer can see and customer also marking the same thing shown at agent side.*
+
+image::Customer_annotation.JPG[align="center"]

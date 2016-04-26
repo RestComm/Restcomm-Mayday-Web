@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<!--
+/*
+* TeleStax, Open Source Cloud Communications
+* Copyright 2011-2016, Telestax Inc and individual contributors
+* by the @authors tag.
+*
+* This program is free software: you can redistribute it and/or modify
+* under the terms of the GNU Affero General Public License as
+* published by the Free Software Foundation; either version 3 of
+* the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+-->
+<html lang="en">
+<head>
+<style>
+body {
+	background-color: ivory;
+}
+
+#sketch {
+	border: 1px solid red;
+}
+
+.coveringCanvas {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+#canvas_screen_share {
+	width: 100%;
+	height: auto;
+}
+</style>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Span</title>
+<!-- Bootstrap Core CSS -->
+<link href="Style/font-awesome.min.css" rel="stylesheet" />
+<link href="Style/bootstrap.css" rel="stylesheet" />
+<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="css/customerscreen.css" rel="stylesheet" type="text/css">
+<link href="css/customer.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="css/yamm3!.css">
+<!-- Fonts -->
+<link rel="stylesheet" type="text/css"
+	href="fonts/font-awesome/fontawesome.css">
+<link rel="stylesheet" href="css/theme.css">
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- <script src="js/jquery.min.js"></script> -->
+<!-- <script type="text/javascript" src="./page1_files/jquery-1.11.1.js"></script> -->
+<link href="css/jquery-ui.css" rel="stylesheet" type="text/css">
+<link href="css/documentation.css" rel="stylesheet" />
+<link href="css/jquery.toolbars.css" rel="stylesheet" />
+<link href="css/bootstrap.icons.css" rel="stylesheet">
+
+
+<!-- <script src="js/jquery.min.js"></script> -->
+<script src="js/jQuery-1.11.1-min.js"></script>
+<script src="js/jquery.toolbar.js"></script>
+<script src="js/jquery-ui.js" type="text/javascript"></script>
+<script src="js/pdf.min.js" type="text/javascript"></script>
+<script>
+sessionStorage.removeItem("togetherjs-session.peerCache");
+</script>
+
+<!-- <script src="js/jquery-ui-1.10.3.js" type="text/javascript"></script> -->
+<script src="js/jain-sip.js"></script>
+<script src="js/global.js"></script>
+<script src="js/WebRTComm.js"></script>
+<script src="js/WebRTCommDataMessage.js"></script>
+<script src="js/span_client.js"></script>
+<script src="togetherjs/togetherjs-min.js"></script>
+<script src="js/cobrowsing.js"></script>
+<script src="js/span_widget.js"></script>
+
+<script type="text/javascript">
+var currentLocation = window.location.href;
+var enableCoBrowse = false;
+if(currentLocation.indexOf("isLoadWSC") > -1){	
+//	setAsAgentScreen();
+	console.log("Cust Page Width -> " + currentLocation.split("custPageWidth=")[1].split("&")[0]);
+	console.log("Cust Page Height -> " + currentLocation.split("custPageHeight=")[1]);
+	//document.getElementById("callAgentButton").style.display="none";
+	console.log("Do not load WebRTC controls.");	
+}else{
+	enableCoBrowse = true;
+	var sessionId = sessionStorage.getItem("sessionId");
+	console.log("========================"+sessionId);
+	$(document).ready(function() {
+		//onPageLoad();
+		
+	});
+}
+
+function pdfPageLoad(){
+	  var myselect = null;
+	  var pdfUrl =null;
+			myselect =  document.getElementById("pdfPageId");
+			 pdfUrl = myselect.options[myselect.selectedIndex].value + ".pdf";
+			console.log("--Customer");
+			document.getElementById("pdfPageUrl").data = pdfUrl;
+			updatePdfPage(pdfUrl);
+}
+
+</script>
+</head>
+
+<body>
+	<!--POPUP-->
+	<div class="container">
+		<!-- Button trigger modal -->
+		<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> Call </button>-->
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h4 class="modal-title" id="myModalLabel"></h4>
+					</div>
+					<div class="modal-body" id="alert_content"></div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal"
+							id="reject">Reject</button>
+						<button type="button" class="btn btn-primary" id="accept"
+							onclick="accept_inCall();">Accept</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--POPUP END-->
+	<!--CHAT-->
+
+	<div class="popup-box chat-popup" id="qnimate">
+		<div class="popup-head">
+			<div class="popup-head-left pull-left" id="chat_headername">
+				<img src="images/profile-icon.png" alt="pawan">
+			</div>
+			<div class="popup-head-right pull-right">
+				<div class="btn-group">
+					<button class="chat-header-button" data-toggle="dropdown"
+						type="button" aria-expanded="false">
+						<i class="glyphicon glyphicon-cog"></i>
+					</button>
+					<ul role="menu" class="dropdown-menu pull-right">
+						<li><a href="#"><i class="fa fa-video-camera"></i> Video
+								Call</a></li>
+						<li><a href="#"><i class="fa fa-phone"></i> Audio Call</a></li>
+						<li><a href="#"><i class="fa fa-paperclip"></i> Send File</a></li>
+						<li class="divider"></li>
+						<li><a href="#"><i class="fa fa-ban"></i> Block</a></li>
+						<li><a href="#"><i class="fa fa-eraser"></i> Clear
+								History</a></li>
+					</ul>
+				</div>
+
+				<button data-widget="remove" id="removeClass"
+					class="chat-header-button pull-right" onclick="hide_popup();"
+					type="button">
+					<i class="glyphicon glyphicon-off"></i>
+				</button>
+			</div>
+		</div>
+		<div class="popup-messages"></div>
+		<div class="popup-messages-footer">
+			<textarea id="status_message" placeholder="Type a message..."
+				rows="10" cols="40" name="message"></textarea>
+			<div class="btn-footer">
+				<button class="bg_none">
+					<i class="glyphicon glyphicon-film"></i>
+				</button>
+				<button class="bg_none">
+					<i class="glyphicon glyphicon-camera"></i>
+				</button>
+				<button class="bg_none">
+					<i class="glyphicon glyphicon-paperclip"></i>
+				</button>
+				<button class="bg_none pull-right">
+					<i class="fa fa-arrow-circle-right" onclick="sendMessage();"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="login-form" id="loginPage" style="display: block;">
+		<div class="container">
+			<div class="loginlogo_div">
+				<img alt="Logo" class="img-responsive" src="images/spanlogo.png"></img>
+			</div>
+
+
+			<!-- Widget starts -->
+			<div class="widget">
+				<!-- Widget head -->
+				<div class="widget-head">
+					<i class="fa fa-lock"></i> Login
+				</div>
+				<div class="widget-content">
+					<div class="padd">
+						<!-- Login form -->
+						<form>
+
+							<div class="form-group col-md-6 col1">
+
+								<label class="control-label"> Domain </label>
+								<div>
+									<input type="text" value="cloud.restcomm.com" id="domain"
+										class="form-control">
+								</div>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label"> Port </label>
+								<div>
+									<input type="text" value="5063" id="port" class="form-control">
+								</div>
+							</div>
+							<!-- Email -->
+							<div class="form-group ">
+								<label class="control-label">User ID</label>
+								<div>
+									<input type="text" value="alice" id="username"
+										class="form-control">
+								</div>
+							</div>
+							<!-- Password -->
+							<div class="form-group">
+								<label class="control-label">Password</label>
+								<div>
+									<input type="password" value="1234" id="password"
+										class="form-control">
+								</div>
+							</div>
+							<!-- Remember me checkbox and sign in button -->
+							<div class="form-group">
+								<div class="checkbox">
+									<label> <input type="checkbox"> Remember me
+									</label>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary btn-block"
+								onClick="signIn();">Login</button>
+						</form>
+					</div>
+				</div>
+				<div class="widget-foot clearfix">
+					<a href="#" class="pull-left">Forgot Password?</a><a href="#"
+						class="pull-right">New Register?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="agentMainScreen" style="display: none;">
+		<div id="drag" style="top: 150px;">
+			<div style="position: absolute; right: 7%; top: 31%">
+				<div id="normal-button" class="settings-button"
+					style="position: absolute; right: 1%; z-index: 999999999;">
+					<img src="img/mayday_48.png" />
+				</div>
+			</div>
+
+			<div id="user-options" class="toolbar-icons" style="display: none;">
+				<a href="#" id="video-panel" onclick=" return spanCall(true);"
+					data-toggle="tooltip" title="Video Call"><i
+					class="fa fa-video-camera"></i></a> <a href="#" id="dail-textbox"
+					onclick=" return spanCall(false);" data-toggle="tooltip"
+					title="Audio Call"><i class="fa fa-microphone"></i></a> <a href="#"
+					id="chat_popup" onclick=" return chat_pop();" data-toggle="tooltip"
+					title="Insant Message"><i class="fa fa-comment"></i></a> <a
+					href="#" id="share_pdf" onclick="return showPdfScreen();"
+					data-toggle="tooltip" title="Pdf Share"><i
+					class="fa fa-share-square-o"></i></a> <a href="#" id="hide-video-panel"
+					onclick="callHangUp();" data-toggle="tooltip" title="End Call"><i
+					class="fa fa-ban"></i></a>
+			</div>
+
+			<div id="video-options" class="toolbar-icons"
+				style="display: none; z-index: 999999999; position: absolute; width: 300px; height: 176px; right: 1%; top: 0%;">
+				<video width="100%" height="100%" id="remoteVideo" autoplay controls>
+					Your browser does not support the video tag.
+				</video>
+				<!--  For Local video -->
+				<!-- <video src="" id="localVideo" autoplay="autoplay" style="margin:0 0 5px 0px;height:225px;width:400px" class="img-responsive" style="display:none;"></video>
+			 -->
+			</div>
+		</div>
+		<div id="dailpad-options" class="toolbar-icons"
+			style="display: none; z-index: 9999; position: absolute; width: 300px; right: -1%; top: 18%;">
+			<label>Enter Number</label> <input type="text" name="destNumber">
+			<br /> <input id="dest-number" type="button" value="Call"
+				style="right: 21%; position: absolute; width: 44%;">
+		</div>
+		<!--share button-->
+		<div id="share" style="z-index: 99999; display: block;">
+			<div id="clickshare1">
+				<span class="glyphicon glyphicon-share" style="display: none;"></span>
+			</div>
+			<div id='image_share_controls'
+				style='left: 0px !important; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; display: block; position: absolute; width: 100%; text-align: center; background-color: #CCCCCC; border: 1px none #000000; z-index: 4;'>
+				<button id='slideshow_button_id' type='button'
+					style='width: 10%; height: 96%;' onclick='on_slideshow_click()'>
+					<i class="glyphicon glyphicon-refresh" title="Roll"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Roll"></i>
+				</button>
+				<input type='text' id='slide_number' name='slide_number'
+					style='width: 30px; height: 60%;''>
+				<button id='first_button_id' type='button'
+					style='width: 10%; height: 96%;' onclick='on_first_click()'>
+					<i class="glyphicon glyphicon-fast-backward" title="First"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="First"></i>
+				</button>
+				<button id='prev_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_prev_click()''>
+					<i class="glyphicon glyphicon-backward" title="Prev"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Prev"></i>
+				</button>
+				<button id='next_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_next_click()''>
+					<i class="glyphicon glyphicon-forward" title="Next"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Next"></i>
+				</button>
+				<button id='last_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_last_click()''>
+					<i class="glyphicon glyphicon-fast-forward" title="Last"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Last"></i>
+				</button>
+			</div>
+
+			<div id='div_screen_share' name='div_screen_share' contenteditable=''
+				style='display: block; position: absolute; width: 100%; height: auto; top: 2% !important;'>
+
+				<!-- <video id='vid_screen_share' controls
+				style='position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; display: none'></video> -->
+				<img id='img_screen_share'
+					style='position: absolute; top: 0%; left: 0%; border: 1px solid #3c7a78;'></img>
+				<!-- <canvas id='canvas_screen_share'
+		style='position: static; top: 10%; left: 0%; display: none;'></canvas> -->
+				<canvas id="canvas_screen_share" width="715" height="470"
+					style="background-color: white; cursor: crosshair; border: 1px solid #3c7a78;"></canvas>
+
+			</div>
+		</div>
+
+		<div class="container-fluid header">
+			<div class="navbar  navbar-default">
+				<header id="layout-header" class="header-bg">
+					<div id="header">
+						<div class="row">
+							<div class="col-md-11 col-md-offset-1 col-sm-offset-1">
+								<ul class="navigation-icon visible-xs">
+									<li class="visible-xs"><a href="#" class="navbar-toggle"
+										data-toggle="collapse" data-target=".test" id="menu-btn">
+											<i class="glyphicon glyphicon-align-justify"></i>
+									</a></li>
+								</ul>
+
+								<div class="col-md-6 col-sm-11 col-md-push-4">
+									<ul class="nav navbar-nav pull-right settings">
+										<li><a href="javascript:void(0)"><span
+												class="hidden-xs">Location:</span><span class="visible-xs"><i
+													class="glyphicon glyphicon-globe"></i></span> <span
+												class="location hidden-xs">KA</span></a></li>
+										<li><a href="#" onclick="logout();"
+											name="&amp;lid=//ghdr//SpanVoIP//signinreg"><span
+												class=" hidden-xs glyphicon glyphicon-user"></span><span
+												class="hidden-xs">Log Out</span><span class="visible-xs"><i
+													class="glyphicon glyphicon-user"></i></span></a></li>
+										<li><a href="#" id="enableCoBrowsering"
+											style="display: none" onclick="enableCoBrowsering();"><span
+												class="hidden-xs">Enable Co-Browsing</span><span
+												class="visible-xs"><i class="flag flag-mx"></i></span></a></li>
+										<li><a href="#" id="btnHandleCanvas"
+											onClick="handleCanvas()"
+											style="width: 120px; display: none; cursor: URL('images/pencil2.cur'), auto;">Enable Annot</a></li>
+										<li><a href="#" id="clear" onclick="handleClearCanvas()"
+											Style="width: 55px">Clear</a></li>
+
+										<li class="visible-xs"><a href="#" class="collapsed"
+											data-toggle="collapse"
+											data-target="#bs-example-navbar-collapse-2"><span
+												class="icon-search"></span></a></li>
+									</ul>
+								</div>
+								<div
+									class="col-md-4 col-xs-12 col-sm-6 col-md-pull-6 col-sm-pull-6 left-pad-zero">
+									<div class="collapse navbar-collapse test">
+										<ul class="nav navbar-nav connection-type">
+											<li><a href="javascript:void(0)">Residential</a></li>
+											<li class="sites"><a href="javascript:void(0)">Business
+													<i class="caret visible-xs-inline-block"></i>
+											</a>
+												<div class="business-Sites">
+													<ul class="list-unstyled">
+														<li><h4>Span Business Sites</h4></li>
+														<li><a
+															name="&amp;lid=//ghdr//business//small business" href="#"
+															class="blue-link">Small Business</a>
+															<p>Complete solutions to start or grow your business
+																with less than 20 employees.</p></li>
+														<li><a
+															name="&amp;lid=//ghdr//business//medium business"
+															href="#" class="blue-link">Medium Business</a>
+															<p>Solutions to start, grow and build your business
+																with 20 or more employees.</p></li>
+														<li><a name="&amp;lid=//ghdr//business//enterprise"
+															href="#" class="blue-link">Enterprise</a>
+															<p>Global and national enterprises, governments and
+																wholesalers.</p></li>
+													</ul>
+												</div></li>
+											<li><a href="javascript:void(0)">Wireless</a></li>
+										</ul>
+									</div>
+								</div>
+								<div class="clearfix visible-xs visible-sm"></div>
+								<div
+									class="col-md-2 col-xs-12 collapse-search-padd col-sm-11 col-sm-offset0">
+									<div style="height: 0px;" class="navbar-collapse collapse"
+										id="bs-example-navbar-collapse-2">
+										<div class="header-search-padd">
+											<div class="">
+												<article class="">
+													<form class="search-form" method="">
+														<fieldset>
+															<div class="input-group top-space">
+																<input placeholder="Search" class="form-control" id="q"
+																	name="q" type="text"> <span
+																	class="input-group-btn search">
+																	<button type="submit" class="btn btn-default">
+																		<i class="icon-search"></i>
+																	</button>
+																</span>
+															</div>
+														</fieldset>
+													</form>
+												</article>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</header>
+				<div id="layout-navigation" class="navbar-bg">
+					<div class="container-fluid">
+						<div class="collapse navbar-collapse test"
+							id="bs-example-navbar-collapse-1">
+							<div class="row">
+								<div
+									class="col-md-11 col-md-offset-1 position-none menu-container">
+									<ul class="nav navbar-nav menu menu-main-menu">
+										<li class="dropdown first clearfix"><a
+											class="dropdown-toggle" data-toggle="dropdown" href="#">Services</a>
+											<ul class="dropdown-menu sub-links">
+												<li>
+													<div class="col-md-8 clearfix">
+														<p>
+															Whether you qualify for our VoIP or Standard services,
+															you will enjoy fast Internet, an impressive lineup of HD
+															channels and reliable phone service. <a
+																href="javascript:void(0)">Learn More</a>
+														</p>
+														<ul class="clearfix menu-container">
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">VoIP&nbsp;<i
+																	class=""></i></a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">About
+																			VoIP</a></li>
+																	<li><a href="javascript:void(0)Product">VoIP
+																			internet</a></li>
+																	<li><a href="javascript:void(0)Product">VoIP
+																			TV</a></li>
+																	<li><a href="javascript:void(0)Product">VoIP
+																			Digital Voice</a></li>
+																	<li><a href="javascript:void(0)Product">VoIP
+																			Deals</a></li>
+																	<li></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">Standard&nbsp;<i
+																	style="display: none;" class="icon-angle-down"></i></a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">High
+																			Speed Internet (DSL)</a></li>
+																	<li><a href="javascript:void(0)Product">DIRECTV
+																			<sup>&reg;</sup>
+																	</a></li>
+																	<li><a href="javascript:void(0)Product">Home
+																			Phone</a></li>
+																	<li><a href="javascript:void(0)Product">High
+																			Speed Internet &amp; DIRECTV <sup>&reg;</sup> Deals
+																	</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">Internet
+																	Essentials&nbsp;<i style="display: none;"
+																	class="icon-angle-down"></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Rep
+																			Resource Center</a></li>
+																	<li><a href="javascript:void(0)Product">OSJ
+																			AdvisorMail Access</a></li>
+																	<li><a href="javascript:void(0)Product">OSJ
+																			Review - Smarsh Email</a></li>
+																	<li><a href="javascript:void(0)Product">Online
+																			Payments</a></li>
+																	<li><a href="javascript:void(0)Product">Production
+																			Guidelines</a></li>
+																</ul></li>
+														</ul>
+													</div>
+													<div class="col-md-4 nav-content">
+														<ul>
+															<li class="">
+																<h3>Find out which Span services are available at
+																	your address.</h3>
+																<h4>
+																	<a href="javascript:void(0);">Check Availablity</a>
+																</h4>
+																<p>
+																	What's the difference between <a href="#"
+																		class="blue-link">VoIP &amp; Standard </a>Services ?
+																</p>
+																<p>
+																	<span class="mobile"></span>Looking for <a href="#"
+																		class="blue-link">Wireless</a>
+																</p>
+															</li>
+														</ul>
+													</div>
+												</li>
+											</ul></li>
+										<li class="dropdown"><a class="dropdown-toggle"
+											data-toggle="dropdown" href="#">Shop</a>
+											<ul class="dropdown-menu sub-links">
+												<li>
+													<div class="col-md-8 clearfix">
+														<p>
+															Shop for the products you want, explore options and get
+															the best offer available when you order service online. <a
+																href="javascript:void(0)">Shop & Compare.</a>
+														</p>
+														<ul class="clearfix menu-container">
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Find the right
+																	service&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Shop
+																			All Services</a></li>
+																	<li><a href="javascript:void(0)Product">Build
+																			Your Own Bundle</a></li>
+																	<li><a href="javascript:void(0)Product"></a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">Existing
+																	customers&nbsp;<i style="display: none;"
+																	class="icon-angle-down"></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Renew
+																			or Change Your Bundle</a></li>
+																	<li><a href="javascript:void(0)Product">Add or
+																			Change Services</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">Moving soon?&nbsp;<i
+																	style="display: none;" class="icon-angle-down"></i></a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Order
+																			New or Move Your Existing Service</a></li>
+																</ul></li>
+														</ul>
+													</div>
+													<div class="col-md-4 nav-content">
+														<ul>
+															<li class="">
+																<h3>Find out which Span services are available at
+																	your address.</h3>
+																<h4>
+																	<a href="javascript:void(0);">Check Availablity</a>
+																</h4>
+																<p>
+																	<span class="mobile"></span>Looking for <a href="#"
+																		class="blue-link">Wireless</a>
+																</p>
+															</li>
+														</ul>
+													</div>
+												</li>
+											</ul></li>
+										<li class="dropdown"><a class="dropdown-toggle"
+											data-toggle="dropdown" href="#">My Services</a>
+											<ul class="dropdown-menu sub-links">
+												<li>
+													<div class="col-md-12 clearfix">
+														<ul class="clearfix menu-container">
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Accounts &amp;
+																	Services&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">View
+																			My Bill</a></li>
+																	<li><a href="javascript:void(0)Product">Pay My
+																			Bill</a></li>
+																	<li><a href="javascript:void(0)Product">One
+																			Time Bill Payment</a></li>
+																	<li><a href="javascript:void(0);">One Time
+																			Bill Payment</a></li>
+																	<li><a href="javascript:void(o)">Change My
+																			Password</a></li>
+																	<li><a href="javascript:void(o)">Change My
+																			Profile</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">&nbsp;</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Manage
+																			My Services</a></li>
+																	<li><a href="javascript:void(0)Product">Add/Change
+																			Services</a></li>
+																	<li><a href="javascript:void(0)Product">Check
+																			Voicemail</a></li>
+																	<li><a href="javascript:void(0)Product">Span
+																			Visual 411</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">&nbsp;</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">How To
+																			Videos </a></li>
+																	<li><a href="javascript:void(0)Product">Moving
+																			?</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Accounts &amp;
+																	Services&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Watch
+																			TV Online</a></li>
+																	<li><a href="javascript:void(0)Product">Rent
+																			or Buy Movies</a></li>
+																	<li><a href="javascript:void(0)Product">View
+																			TV Listings</a></li>
+																	<li><a href="javascript:void(0);">One Time
+																			Bill Payment</a></li>
+																	<li><a href="javascript:void(o)">View Pay Per
+																			View</a></li>
+																	<li><a href="javascript:void(o)">Program My
+																			DVR</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Email &amp;
+																	News&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Check
+																			My Email</a></li>
+																	<li><a href="javascript:void(0)Product">Check
+																			Latest News</a></li>
+																	<li><a href="javascript:void(0)Product">Play
+																			the Latest Game</a></li>
+																</ul></li>
+														</ul>
+													</div>
+													<div class="col-md-12 sign-in">
+														<a href="javascript:void(0);" class="pull-left">Sign
+															In</a> <a href="javascript:void(0);" class="pull-right">Forgot
+															Password</a>
+														<p></p>
+													</div>
+												</li>
+											</ul></li>
+										<li class="dropdown"><a class="dropdown-toggle"
+											data-toggle="dropdown" href="#">Support</a>
+											<ul class="dropdown-menu sub-links">
+												<li>
+													<div class="col-md-12 clearfix">
+														<ul class="clearfix menu-container">
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Service &amp; Device
+																	help&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">QuickGuides</a>
+																	</li>
+																	<li><a href="javascript:void(0)Product">Internet</a>
+																	</li>
+																	<li><a href="javascript:void(0)Product">TV</a></li>
+																	<li><a href="javascript:void(0);">Phone</a></li>
+																	<li><a href="javascript:void(o)">Home
+																			Monitoring and Control</a></li>
+																	<li><a href="javascript:void(o)">Wireless</a></li>
+																	<li><a href="javascript:void(o)">Repair Status</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle"
+																data-toggle="dropdown" href="#">Account help&nbsp;</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Account
+																			Overview </a></li>
+																	<li><a href="javascript:void(0)Product">View
+																			and Pay Bill</a></li>
+																	<li><a href="javascript:void(0)Product">Order
+																			Status</a></li>
+																	<li><a href="javascript:void(0)Product">Renew
+																			Your Contract</a></li>
+																	<li><a href="javascript:void(0)Product">Contact
+																			Us</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Community help&nbsp;</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Forums</a>
+																	</li>
+																	<li><a href="javascript:void(0)Product">Blogs</a>
+																	</li>
+																	<li><a href="javascript:void(0)Product">Idea
+																			Exchange</a></li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Search Support&nbsp;<i
+																	class=""></i></a>
+																<ul class="dropdown-menu mega-menu">
+																	<li>
+																		<form class="search-form" method="">
+																			<fieldset>
+																				<div class="input-group">
+																					<input placeholder="How can we help you ?"
+																						class="form-control" id="q" name="q" type="text">
+																					<span class="input-group-btn">
+																						<button type="submit" class="btn btn-default">
+																							<i class="icon-search"></i>
+																						</button>
+																					</span>
+																				</div>
+																			</fieldset>
+																		</form>
+																	</li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">Connect with
+																	us&nbsp;<i class=""></i>
+															</a>
+																<ul class="dropdown-menu mega-menu">
+																	<li>
+																		<ul class="list-inline">
+																			<li class=""><a href="#" alt="Span on Facebook"
+																				class="footer-sprite facebook">&nbsp;</a></li>
+																			<li class=""><a href="#" alt="Span on Twitter"
+																				class="footer-sprite twitter">&nbsp;</a></li>
+																			<li class=""><a href="#"
+																				alt="Span on Google Plus"
+																				class="footer-sprite google">&nbsp;</a></li>
+																		</ul>
+																	</li>
+																</ul></li>
+															<li class="dropdown"><a class="dropdown-toggle VoIP"
+																data-toggle="dropdown" href="#">&nbsp;<i class=""></i></a>
+																<ul class="dropdown-menu mega-menu">
+																	<li><a href="javascript:void(0)Product">Accessablity</a>
+																	</li>
+																</ul></li>
+														</ul>
+													</div>
+												</li>
+											</ul></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container-fluid logo-container">
+			<div class="">
+				<div class="col-md-2 col-xs-12 col-sm-1 logo">
+					<div class="logo-bg">
+						<a href="#">
+							<center>
+								<img src="images/logo1.png" alt="Logo" class="img-responsive">
+							</center>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Navigation ends -->
+
+		<!-- Main content -->
+		<div id="main_div" class="container content">
+
+			<div id="sketchContainer">
+				<canvas id="sketch"
+					style="display: none; position: absolute; z-index: 9; cursor: URL('images/pencil2.cur'), auto;"></canvas>
+			</div>
+			<div class="row">
+				<div class="col-md-8 col-sm-8">
+					<h1 class="TitleHead">VoIP Speed Optimizer</h1>
+					<h2 class="MainHead">Going as fast as you should?</h2>
+					<p>Were your VoIP? Speed Test results less than what you
+						expected? Check and reconfigure your computer settings* (TCP/IP
+						and MTU) using the VoIP Speed Optimizer Tool. This will ensure
+						you're reaching your maximum VoIP speeds!</p>
+					<h4 class="tips">TIPS:</h4>
+					<ul>
+						<li class="points">The VoIP Speed Optimizer Tool is only
+							available with a Windows operating system.</li>
+						<li class="points">You must be signed in as an administrator
+							on your PC or laptop to allow VoIP Speed Optimizer to update
+							settings. (<a href="#" class="underline dsbld">Reference
+								FAQ's for administrator instructions</a>)
+						</li>
+						<li class="points">Mac computers may be optimized using the <a
+							href="#" class="underline dsbld">Apple Broadband Tuner</a>.
+						</li>
+						<li class="points">The VoIP Speed Test will provide the most
+							accurate reading when your PC or laptop is plugged into the
+							router with an <b>Ethernet</b> cable.
+						</li>
+						<li class="points">Disconnect from any Virtual Private
+							Network (VPN) connections that you may be using (ex. VPN used to
+							access your work files remotely).</li>
+						<li class="points">The speed of the service will vary based
+							on network or Internet utilization, your laptop or computer, your
+							browser, your use of VoIP TV Video On Demand service and the
+							wiring inside your location, among other factors.</li>
+					</ul>
+				</div>
+				<!-- Video content -->
+				<div class="col-md-4 col-sm-4 video-container" id="videoPanel"
+					style="z-index: 999999;">
+					<div id="audio" style="display: none;">
+						<audio id="remoteAudio" autoplay
+							style="width: 100%; text-align: center; padding-left: 31%; padding-right: 30%;"></audio>
+						<audio controls id="localAudio" autoplay muted
+							style="width: 100%; text-align: center; padding-left: 31%; padding-right: 30%;"></audio>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 col-sm-12" style="padding-right: 28px;">
+					<b>Let's get started!</b>
+					<p>
+						1. Select the <b>Optimize My Connection</b>
+					</p>
+					<p>
+						<b>Note:</b> If your Span VoIP service download speed is 5 Mbps or
+						lower, you do not need to run the Optimizer.<br /> Your download
+						speed is the rate at which information is sent from the Internet
+						to your PC.<br /> For example if you have a package of 50 Mbps/25
+						Mbps the first number, 50 Mbps, is your download speed. The second
+						number, 25 Mbps, is your upload speed. Your upload speed is the
+						rate at which information is sent to the Internet by your PC.
+					</p>
+					<button type="button" class="btn custom-btn">Optimize My
+						Connection*</button>
+					<p class="small">*You authorize Span to access and reconfigure
+						your settings.</p>
+					<p>
+						<a class="underline dsbld" href="#">Network Diagnostic Tool</a>
+						(NDT), selection of this link will take you to NDT test.
+					</p>
+				</div>
+			</div>
+		</div>
+
+
+		<div class="feedback hidden-xs">
+			<span class="feedback-img"></span>
+		</div>
+	</div>
+
+
+
+
+
+	<script>
+	$(document).ready(function() {
+		//spanThemeLogin();
+		if($(window).width()>540){
+		    	$('.footer-container').each(function() {
+			var heightBox = 0;
+			$('.footer-links-container', this).each(function() {
+                if(($(this).height()) > heightBox){
+					heightBox = $(this).height(); 
+				}
+            });
+			$('.footer-links-container', this).height(heightBox);
+        }); 
+		
+	}
+		
+    });
+	$('div.site-map-menu').click(function(){
+		
+		$('.site-map').slideToggle('slow');
+		//$('.site-map').slideToggle('slow');
+		
+	});
+	$('.footer-links-container h5').click(function(){
+		$(this).next("ul").toggle('slow');
+	});
+	
+	if($(window).width() > (999) ){
+		var contHt = $('.sub-links').height();
+		console.log(contHt);
+		$('.nav-content').css('height', contHt);
+	}
+	
+	$("body").find('a').addClass("dsbld");
+
+  $(".dsbld").attr("href","#");
+  $('a[target="_blank"]').removeAttr('target');
+ 
+$("#clear").click( function() {
+	var c=document.getElementById("sketch");
+	var ctx=c.getContext("2d");
+	ctx.clearRect(0, 0, c.width, c.height);
+	if(gUserName.indexOf("jack") == 0){
+		parent.clearCanvas();
+	} else {
+		clearCanvas();
+	}
+});
+
+ </script>
+
+	<script>
+/* $(function () {
+    $("#clickshare1").toggle(function () {
+        $(this).parent().animate({left:'0px'}, {queue: false, duration: 500});
+    }, function () {
+        $(this).parent().animate({left:'-53%'}, {queue: false, duration: 500});
+    });
+});
+ */
+$(function(){
+	$("#chat_popup").click(function () {
+		    $('#qnimate').addClass('popup-box-on');
+	  });
+	          
+   $("#removeClass").click(function () {
+	   $('#qnimate').removeClass('popup-box-on');
+	     });
+ }); 
+ 
+</script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/span_screenShare.js" type="text/javascript"></script>
+	<script src="js/together_canvas.js"></script>
+</body>
+</html>

@@ -1,0 +1,788 @@
+body {
+	padding-top: 47px;
+	font-family: "Segoe UI";
+	font-size: 13px;
+	color: #666666;
+}
+html, body {
+	height: 100%;
+}
+#wrapper {
+	min-height: 100%;
+	height: auto;
+	margin-bottom: -30px;
+}
+#wrapper::after {
+	content: "";
+	display: block;
+	height: 30px;
+}
+#footer {
+	padding: 6px 0;
+	background-color: #e0e0e0;
+	position: absolute;
+	width: 100%;
+	color: #363636;
+	height: 30px;
+	font-size: 11px;
+	text-align: center;
+}
+ul {
+	list-style: none;
+}
+/** button-styles starts here**/
+.btn {
+	border: 0;
+	border-radius: 2px;
+	color: #fff;
+	padding: 3px 10px;
+}
+.btn:hover {
+	color: #fff;
+}
+.btn-primary {
+	background-color: #116da9;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:hover, .btn-primary.active:hover, .btn-primary:active:focus, .btn-primary.active:focus, .btn-primary.focus:active, .btn-primary.active.focus {
+	background-color: #0f639b;
+}
+.btn-default {
+	background-color: #7f7c7c;
+}
+.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default:active:hover, .btn-default.active:hover, .btn-default:active:focus, .btn-default.active:focus, .btn-default.focus:active, .btn-default.active.focus {
+	background-color: #626060;
+	color: #fff;
+}
+/** button-styles ends here**/
+
+/* login styles begins */
+
+.logoimg {
+	margin: 10px 0 5px 0;
+}
+.login-form {
+	margin: 70px auto;
+	max-width: 400px;
+	border: 0 !important;
+}
+.login-form .panel {
+	background-color: #eee;
+	border-top: 0;
+	margin: 0;
+	border-radius: 5px;
+}
+.login-form .panel-heading {
+	padding: 0px 0;
+	border-bottom: 1px solid #ccc;
+}
+.login-form .panel-heading .panel-title {
+	color: #2980b9;
+	font-size: 17px;
+	Padding-bottom: 10px;
+	font-weight: normal;
+	text-transform: none;
+	text-align: center;
+}
+.login-form .panel-body {
+	padding: 10px 10px 0 10px;
+}
+.login-form input[type="text"], .login-form input[type="password"],.login-form select,.login-form .bottom-padding .btn{
+	font-size: 14px;
+	height: 35px;
+	box-shadow: none;
+}
+.login-form .input-group-addon {
+	color: #e9e9e9;
+	border-radius: 0;
+	font-size: 18px;
+	background-color: #2980b9;
+	border-color: #2980b9;
+	padding: 2px 7px;
+	min-width: 36px;
+}
+.login-form .checkbox {
+	margin: 0;
+}
+.login-form .form-group {
+	margin-bottom: 5px;
+}
+.login-form .form-control {
+	box-shadow: none;
+	border-radius: 0;
+}
+.login-form  .bottom-padding {
+padding: 0 ;
+}
+.login-form .panel-footer {
+	border-top: none;
+	padding: 0 0 5px 0;
+	font-size: 14px;
+	background-color: transparent;
+}
+body.login-bg {
+	background-color: #2980b9;
+}
+/**header-section starts here**/
+header.navbar-default {
+	background-color: #fff;
+	border: none !important;
+	border-bottom: 1px solid #ddd !important;
+}
+header.navbar {
+	min-height: 47px;
+}
+.navbar-header {
+	float: none !important;
+}
+.navbar-brand {
+	margin: 6px 0 4px 0 !important;
+	padding: 0;
+	height: 36px;
+}
+/**user profile starts here**/
+.user-account .nav > li.dropdown > a {
+	color: #383838;
+	padding: 4px 15px;
+	height: 46px;
+	line-height: 18px;
+}
+.user-account .profpic {
+	float: left;
+	padding-right: 10px;
+}
+.user-account .nav > li.dropdown > a span {
+	display: block;
+	text-align: left;
+}
+.user-account span.welcome {
+	font-weight: bold;
+	font-size: 11px;
+}
+.user-account .navbar-nav > li > .dropdown-menu {
+	z-index: 1001;
+	right: auto;
+}
+.user-account i {
+	margin: 10px 0 0 0;
+	padding: 5px 0 0 10px;
+}
+.user-account .dropdown-menu > li > a {
+	padding: 3px 0;
+}
+.user-account .dropdown-menu i {
+	margin-top: 0;
+}
+.user-account .navbar-nav > li > .dropdown-menu a:hover {
+	background-color: #116da9;
+	color: #fff;
+}
+.user-account .nav > li.dropdown > a:hover, .user-account .nav > li.dropdown > a:focus {
+	color: #000 !important;
+}
+/**user profile ends here**/
+
+/**togglebar starts here**/
+.navbar-toggle {
+	float: left!important;
+	margin-left: 15px !important;
+	background-color: #36a9e1;
+	border: none;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #fff;
+}
+.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+	background-color: #448fb9;
+}
+/**togglebar ends here**/
+/**header-section ends here**/
+/** container-section starts here**/
+
+.page-header {
+	border-bottom: 1px solid d7d7d7;
+	margin: 0 -15px 20px -15px;
+	padding: 0px 15px 2px 15px;
+	font-size: 20px;
+	color: #1862a3;
+	background: #f7f7f7;
+}
+.custom-header {
+	margin: 0 -15px 20px -15px !important;
+}
+.row-margin {
+	margin-top: 20px;
+}
+.top-blocks {
+	margin: 20px 0 20px 0;
+}
+.widget {
+	border-radius: 3px;
+	color: #fff;
+	overflow: hidden;
+	padding: 15px;
+	-webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.35);
+	-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.35);
+	box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.35);
+	height: 90px !important;
+}
+.widget .glyphicon {
+	top: 5px;
+}
+.widget .state-icon {
+	color: #fff;
+	float: right;
+	font-size: 42px;
+	height: 56px;
+	line-height: 56px;
+	margin-left: 15px;
+	text-align: center;
+	width: 56px;
+	margin-top: 2px;
+}
+.widget .state-info h4 {
+	color: #fff;
+	font-size: 15px;
+	margin: 0 0 0 0;
+}
+.widget .state-info p {
+	font-size: 38px;
+	font-weight: 300;
+	margin: 0;
+}
+.bg-purple {
+	background: #727cb6 none repeat scroll 0 0 !important;
+}
+.bg-blue {
+	background: #348fe2 none repeat scroll 0 0 !important;
+}
+.bg-red {
+	background: #e00404 none repeat scroll 0 0 !important;
+}
+.bg-green {
+	background: #29be57 none repeat scroll 0 0 !important;
+}
+.panel {
+	border-radius: 0;
+	border-top: 4px solid #2980b9;
+	margin: 0 -1px 20px -1px;
+	box-shadow: none;
+}
+.panel-default > .panel-heading {
+	background-color: #fff;
+	padding: 10px 15px;
+}
+.panel-title {
+	font-size: 17px;
+}
+.panel-heading i {
+	color: #2980b9;
+}
+.panel-heading .form-group {
+	margin-bottom: 0;
+}
+.panel-heading .form-control {
+	border-radius: 0;
+	height: 20px;
+	padding: 0 12px;
+	font-size: 11px;
+}
+.panel-heading .form-control {
+	margin-right: 5px;
+}
+.custom-panelbody {
+	padding: 0;
+}
+.custom-panelbody .table {
+	margin-bottom: 0;
+}
+.panel-footer {
+	padding: 5px 30px;
+	background-color: #fff;
+}
+.scroll_container {
+	height: 265px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+/*** Fixed Header table ****/
+.fht-table, .fht-table thead, .fht-table tfoot, .fht-table tbody, .fht-table tr, .fht-table th, .fht-table td {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: top;
+}
+.fht-table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.fht-table-wrapper, .fht-table-wrapper .fht-thead, .fht-table-wrapper .fht-tfoot, .fht-table-wrapper .fht-fixed-column .fht-tbody, .fht-table-wrapper .fht-fixed-body .fht-tbody, .fht-table-wrapper .fht-tbody {
+	overflow: hidden;
+	position: relative;
+}
+.fht-table-wrapper .fht-fixed-body .fht-tbody, .fht-table-wrapper .fht-tbody {
+	overflow: auto;
+}
+.fht-table-wrapper .fht-table .fht-cell {
+	overflow: hidden;
+	height: 1px;
+}
+.fht-table-wrapper .fht-fixed-column, .fht-table-wrapper .fht-fixed-body {
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+.fht-table-wrapper .fht-fixed-column {
+	z-index: 1;
+}
+.fht-table thead th span {
+	font-weight: bold;
+}
+/*** Fixed Header table ****/
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th {
+	padding: 3px 8px;
+}
+.table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+	padding: 3px 8px;
+	border-top: 0;
+	height: 30px;
+	vertical-align: middle;
+}
+.table > thead > tr > th {
+	border-bottom: 1px solid #dddddd;
+}
+.table-hover > tbody > tr:hover, a.list-group-item:hover, a.list-group-item:focus {
+	background-color: #f1f1f1;
+}
+.custom-table tr:last-child {
+	border-bottom: 1px solid #ddd;
+}
+.row-gray {
+	background-color: #f7f7f7;
+}
+.table .label {
+	border-radius: 0;
+	padding: 3px 5px;
+	font-size: 12px;
+	font-weight: normal;
+}
+.text-connected {
+	background-color: #50bce4;
+}
+.text-active {
+	background-color: #37bc9b;
+}
+.text-inactive {
+	background-color: #959595;
+}
+.text-failure {
+	background-color: #da574f;
+}
+.panel-heading a {
+	text-decoration: underline;
+	color: #1e8fc6;
+}
+.list-group {
+	margin-bottom: 0;
+	height: 240px;
+	overflow-y: scroll;
+}
+.list-group-item {
+	padding: 4px 15px;
+	border: none;
+}
+.list-group-item:first-child, .list-group-item:last-child {
+	border-radius: 0;
+}
+.list-group-item span {
+	vertical-align: middle;
+	display: inline-block;
+}
+.list-group-item .label {
+	padding: 4px 4px 5px 5px;
+	text-align: center;
+	font-size: 14px;
+	margin-right: 5px;
+	width: 25px;
+}
+.custom-label {
+	padding: 0 2px;
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+	margin-left: 10px;
+}
+.label-greenbg {
+	background-color: #43b6af;
+}
+.label-redbg {
+	background-color: #f60b0b;
+}
+.label-bluebg {
+	background-color: #88c4f6;
+}
+.list-group-item .small {
+	margin-top: 3px;
+}
+.text-red {
+	color: #f60b0b;
+}
+.panel-heading i, .navigation ul > li > a i, .user-account .dropdown-menu i, .left-nav i {
+	margin-right: 10px;
+	width: 15px;
+}
+.panel-heading .pull-right .fa {
+	width: 0;
+	color: #666;
+}
+.page-header i {
+	margin-right: 10px;
+}
+/****menu expand/collapse for Deasktop View*/
+
+.content-maxmized .left-nav {
+	display: none;
+}
+.content-maxmized .custom-main {
+	width: 100%;
+	padding: 0 15px;
+	margin-left: 0;
+}
+.content-maxmized .toggle-div {
+	left: 0px;
+}
+.toggle-div .glyphicon .glyphicon-chevron-right {
+	display: none;
+}
+.toggle-div {
+	height: auto;
+	left: 16.55%;
+	position: absolute;
+	top: 295px;
+	width: 25px;
+	z-index: 1000;
+}
+.toggle-div .fa {
+	background: rgba(0, 0, 0, 0) url("../Images/toggle-bgiconnew.png") no-repeat scroll 0 0;
+	color: #40516f;
+	cursor: pointer;
+	display: inline-block;
+	height: 80px;
+	padding: 8px 0px;
+	position: relative;
+	vertical-align: middle;
+	width: 15px;
+}
+/**** Left Navigation ****/
+.left-nav {
+	position: relative;
+	top: 0;
+	bottom: -47px;
+	left: 0;
+}
+.leftright-paddingzero {
+	padding-left: 0;
+	padding-right: 0;
+}
+.left-nav {
+	background-color: #2980b9 !important;
+	border-right: 1px solid #ddd;
+}
+.left-nav .nav > li + li {
+	margin-top: 0;
+}
+.left-nav .nav > li {
+	border-bottom: 1px solid #116da9;
+}
+.left-nav .nav > li > a {
+	border-radius: 0;
+	font-size: 15px;
+	color: #e3e3e3;
+	display: block;
+	padding: 7px 10px;
+	border-left: 3px solid #2980b9;
+}
+.left-nav .nav > li > a:hover {
+	color: #fff;
+	background-color: #116da9 !important;
+	border-left: 3px solid #e9e9e9;
+}
+.left-nav .nav > li:hover, .left-nav .nav > li.active, .left-nav .nav > li:active, .left-nav .nav > li:focus {
+	background-color: #116da9!important;
+	color: #fff;
+}
+.nav > li.active > a, .nav > li.active > a:hover, .nav > li.active > a:focus, .left-nav .nav > li > a:focus {
+	color: #fff;
+	background-color: #116da9!important;
+	border-left: 3px solid #e9e9e9;
+}
+.mobile-nav {
+	position: absolute;
+	top: 47px;
+	background: #fff;
+	z-index: 999;
+	width: 200px;
+	left: -999px;
+	position: absolute;
+}
+.position-zero {
+	left: 0 !important;
+}
+.navbar-toggle {
+	float: left!important;
+	margin-left: 15px !important;
+}
+label {
+	font-weight: normal;
+	display: block;
+}
+.bottom-padding {
+	padding: 0 0 15px 0;
+}
+.form-control {
+	border-radius: 0;
+	height: 30px;
+	padding: 3px 10px;
+}
+.col-sm-2 .btn {
+	width: 100%;
+	height: 30px;
+	border-radius: 0;
+}
+.icon-expand {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	margin: -1px 0;
+	padding: 0;
+}
+.panel-dropdown {
+	display: inline-block;
+}
+.panel-dropdown a {
+	text-decoration: none;
+	Color: #666;
+}
+.dropdown-margin {
+	padding-right: 10px;
+	border-right: 1px solid #ddd;
+	margin-right: 10px;
+}
+.panel-dropdown > ul.drop-list {
+	list-style: none;
+	padding: 0px;
+	position: absolute;
+	top: 31px;
+	background-color: #fff;
+	min-width: 100px;
+	display: none;
+	box-shadow: 0px 5px 10px rgba(0,0,0,0.5);
+	z-index: 99999;
+}
+.panel-dropdown > ul.drop-list > li {
+	cursor: pointer;
+	padding: 5px 10px;
+}
+.panel-dropdown > ul.drop-list > li:last-child {
+	border-bottom: none;
+}
+.custom-drop-list {
+	min-width: 60px !important
+}
+.field h4 {
+	color: #36a9e1;
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 5px;
+}
+/**Filter clear icon styles starts**/
+.clearable {
+	background: url("../Images/clear.png") no-repeat scroll right -20px center #fcfbfb;
+	border: 1px solid #e8e6e6;
+	border-radius: 0;
+	padding: 2px 10px;
+	transition: background 0.4s ease 0s;
+	width: 200px;
+	
+	font-size: 11px;
+	line-height: 17px;
+}
+.clearable.x {
+	background-position: right 5px center;
+	cursor: pointer;
+}
+/**Pagination styles starts**/
+.pagination-div {
+	padding: 0 15px;
+}
+.pagination {
+	margin: 5px 0;
+}
+.pagination > li > a, .pagination > li > span {
+	padding: 3px 10px;
+}
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+	color: #fff;
+	background-color: #2980b9!important;
+}
+.row-numbers {
+	margin-top: 8px;
+}
+/* modal starts*/
+.modal {
+	border-radius: 0;
+}
+.modal-header {
+	background-color: #2980b9;
+	padding: 5px 15px;
+}
+.modal .close {
+	font-size: 20px !important;
+	color: #fff;
+	opacity: 1;
+}
+.modal h4 {
+	color: #fff;
+	font-size: 16px;
+}
+.modal h5 {
+	margin: 0 0 10px 0;
+}
+.modal-body {
+	padding: 5px 15px;
+}
+.modal-content {
+	border-radius: 0;
+}
+.modal-footer {
+	padding: 5px 15px;
+}
+.modal .form-group {
+	margin: 0 0 10px 0;
+}
+.modal .form-control {
+	height: 25px;
+	padding: 2px 5px;
+}
+.custom-form label {
+	color: #36a9e1;
+}
+.custom-modaldialog {
+	width: 350px;
+	margin: 50px auto;
+	padding-bottom: 10px;
+}
+/* modal ends*/
+ /**Media Queries **/
+
+@media (max-width: 767px) {
+body, .body-padding {
+	padding-top: 46px;
+}
+header.navbar {
+	min-height: 46px;
+}
+header.navbar-default {
+	border-bottom: 1px solid #ddd!important;
+}
+.user-account .nav > li.dropdown > a {
+	float: right;
+	background-color: transparent;
+}
+.navbar-default .navbar-toggle {
+	z-index: 9999;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar- default .navbar-nav > .open > a:focus {
+	background-color: none;
+}
+.user-account .navbar-nav {
+	margin: 0 0 0 0px;
+}
+.user-account .navbar-nav > li > .dropdown-menu {
+	padding-bottom: 0;
+}
+.user-account .profpic {
+	padding-right: 0;
+}
+.user-account .navbar-nav > li > .dropdown-menu > li {
+	background-color: #f7f7f7;
+}
+.user-account .navbar-nav > li.dropdown > ul.dropdown-menu > li:first-child {
+	margin-top: 41px;
+	border-top: 1px solid #ddd;
+}
+.user-account .navbar-nav > li.dropdown > ul.dropdown-menu > li:last-child {
+	border-bottom: 1px solid #ccc;
+}
+.panel-heading .col-xs-12 .pull-right {
+	float: left !important;
+	margin-top: 10px;
+}
+.table-responsive {
+	margin-bottom: 0;
+	border: none;
+}
+.row-numbers {
+	margin-top: 0;
+}
+.pull-right.row-numbers {
+	float: left !important;
+}
+}
+@media (max-width: 1329px) {
+.widget .state-info h4 {
+	font-size: 13px;
+}
+.widget .state-info p {
+	font-size: 32px;
+}
+.panel-title {
+	font-size: 16px;
+}
+ @media (max-width: 991px) {
+.widget {
+ margin-bottom: 10px;
+}
+.navbar-toggle {
+ margin-bottom: 0;
+}
+.navbar-toggle.custom-togglebar {
+ display: block;
+ margin-left: 0 !important;
+}
+.toggle-div {
+ display: none;
+}
+.widget .state-info h4 {
+ font-size: 15px;
+}
+.widget .state-info p {
+ font-size: 38px;
+}
+.panel-title {
+ font-size: 18px;
+}
+.left-nav .nav > li > a {
+ font-size: 14px;
+}
+}
+ @media (max-width: 768px) {
+.panel-default > .panel-heading {
+	padding: 7px 15px;
+}
+.navbar-toggle.custom-togglebar {
+	margin-left: 15px !important;
+}
+}
+ @media (max-width:360px) {
+.navbar-brand img {
+	width: 125px;
+}
+}
+@media (max-width:320px) {
+.panel-title {
+	font-size: 15px;
+}
+.custom-modaldialog {
+	width: 300px;
+}
+}

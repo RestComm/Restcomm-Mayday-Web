@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<!--
+/*
+* TeleStax, Open Source Cloud Communications
+* Copyright 2011-2016, Telestax Inc and individual contributors
+* by the @authors tag.
+*
+* This program is free software: you can redistribute it and/or modify
+* under the terms of the GNU Affero General Public License as
+* published by the Free Software Foundation; either version 3 of
+* the License, or (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU Affero General Public License for more details.
+*
+* You should have received a copy of the GNU Affero General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>
+*/
+-->
+<html lang="en">
+<head>
+<title>SPAN</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="css/bootstrap.css" rel="stylesheet" />
+<link href="Style/font-awesome.min.css" rel="stylesheet" />
+<link href="Style/application-common.css" rel="stylesheet" />
+<link href="css/documentation.css" rel="stylesheet" />
+<link href="css/jquery.toolbars.css" rel="stylesheet" />
+<link href="css/bootstrap.icons.css" rel="stylesheet">
+
+<script src="js/jquery-1.7.2.min.js"></script>
+<script src="js/jquery-ui.js" type="text/javascript"></script>
+<script src="js/jquery.toolbar.js"></script>
+<script src="js/pdf.min.js" type="text/javascript"></script>
+<!-- <script src="js/jquery-ui-1.10.3.js" type="text/javascript"></script> -->
+<script src="js/jain-sip.js"></script>
+<script src="js/global.js"></script>
+<script src="js/WebRTComm.js"></script>
+<script src="js/WebRTCommDataMessage.js"></script>
+<script src="js/span_client.js"></script>
+<!-- <script src="togetherjs/togetherjs-min.js"></script>-->
+<script src="js/cobrowsing.js"></script>
+<script src="js/span_widget.js"></script>
+<script>
+sessionStorage.removeItem("togetherjs-session.peerCache");
+</script>
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+        <script src="~Scripts/Bootstrap/html5shiv.js"></script>
+        <script src="~Scripts/Bootstrap/respond.js"></script>
+    <![endif]-->
+<!-- Fav and touch icons -->
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+</head>
+<body>
+	<div class="login-form" id="loginPage" style="display: block;">
+		<div class="container">
+			<div class="loginlogo_div">
+				<img alt="Logo" class="img-responsive" src="images/spanlogo.png"></img>
+			</div>
+
+
+			<!-- Widget starts -->
+
+			<div class="widget">
+
+				<!-- Widget head -->
+				<div class="widget-head">
+					<i class="fa fa-lock"></i> Login
+				</div>
+				<div class="widget-content">
+					<div class="padd">
+						<!-- Login form -->
+						<form>
+							<div class="form-group">
+								<div class="form-group col-md-6 col1">
+									<label class="control-label "> Domain </label>
+									<div>
+										<input type="text" value="cloud.restcomm.com" id="domain"
+											class="form-control">
+									</div>
+								</div>
+								<div class="form-group col-md-6">
+									<label class="control-label"> Port </label>
+									<div>
+										<input type="text" value="5063" id="port" class="form-control">
+									</div>
+								</div>
+							</div>
+							<!-- Email -->
+							<div class="form-group">
+								<label class="control-label">User ID</label>
+								<div>
+									<input type="text" value="test" id="username"
+										class="form-control">
+								</div>
+							</div>
+							<!-- Password -->
+							<div class="form-group">
+								<label class="control-label">Password</label>
+								<div>
+									<input type="password" value="1234" id="password"
+										class="form-control">
+								</div>
+							</div>
+							<!-- Remember me checkbox and sign in button -->
+							<div class="form-group">
+								<div class="checkbox">
+									<label> <input type="checkbox"> Remember me
+									</label>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary btn-block"
+								onClick="signIn();">Login</button>
+						</form>
+					</div>
+				</div>
+				<div class="widget-foot clearfix">
+					<a href="#" class="pull-left">Forgot Password?</a><a href="#"
+						class="pull-right">New Register?</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--Wrapper Section Starts Here-->
+	<!--share button-->
+	<div id="slideout">
+	<div id="clickme" style="display:none;">
+    </div>
+    <div class="slidecontent clearfix" id="slideContentId">
+       <iframe scrolling="yes" style = "overflow:visible;width:773px;height:450px "  id="peerBrowser" src="blank.htm" name="myDemoFrame" width="800" height="450" onload="setIframeWidth();"></iframe>
+    </div>
+</div>
+	<!--share button-->
+	<div id="agentMainScreen" style="display: none;">
+		<div id="drag">
+			<div style="position: absolute; right: 7%; top: 31%">
+				<div id="normal-button" class="settings-button"
+					style="position: absolute; right: 1%; z-index: 999999999;">
+					<img src="img/mayday_48.png" />
+				</div>
+			</div>
+
+			<div id="user-options" class="toolbar-icons" style="display: none;">
+				<a href="#" id="video-panel" onclick=" return spanCall(true);"	data-toggle="tooltip" title="Video Call"><i	class="fa fa-video-camera"></i></a>
+				 <a href="#" id="dail-textbox" onclick=" return spanCall(false);" data-toggle="tooltip" title="Audio Call"><i class="fa fa-microphone"></i></a> 
+				 <a href="#" id="chat_popup" onclick="return chat_pop(); " data-toggle="tooltip" title="Insant Message"><i class="fa fa-comment"></i></a> 
+				 <a	href="#" id="share_pdf" onclick="return showPdfScreen();" data-toggle="tooltip" title="Pdf Share"><i class="fa fa-share-square-o"></i></a>
+				  <a href="#" id="hide-video-panel" onclick="callHangUp();" data-toggle="tooltip" title="End Call"><i class="fa fa-ban"></i></a>
+			</div>
+
+			<div id="video-options" class="toolbar-icons"
+				style="display: none; z-index: 999999999; position: absolute; width: 300px; height: 176px; right: 1%; top: 0%;">
+				<!-- for local video -->
+				<!--	<video src="" id="localVideo" autoplay="autoplay" style="margin:0 0 5px 0px;height:225px;width:400px" class="img-responsive" style="display:none;"></video>
+				-->
+				<video width="100%" height="100%" id="remoteVideo" autoplay controls>
+					Your browser does not support the video tag.
+				</video>
+				
+			</div>
+		</div>
+		<div id="dailpad-options" class="toolbar-icons"
+			style="display: none; z-index: 9999; position: absolute; width: 300px; right: -1%; top: 18%;">
+			<label>Enter Number</label> <input type="text" name="destNumber">
+			<br /> <input id="dest-number" type="button" value="Call"
+				style="right: 21%; position: absolute; width: 44%;">
+		</div>
+
+		<div id="share" style="z-index: 99999, display:block;">
+			<div id="clickshare">
+				<span class="glyphicon glyphicon-share" style="display: none;"></span>
+			</div>
+			<div id='image_share_controls'
+				style='left: 0px !important; -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; display: block; position: absolute; width: 100%; text-align: center; background-color: #CCCCCC; border: 1px none #000000; z-index: 4;'>
+				<button id='slideshow_button_id' type='button'
+					style='width: 10%; height: 96%;' onclick='on_slideshow_click()'>
+					<i class="glyphicon glyphicon-refresh" title="Roll"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Roll"></i>
+				</button>
+				<input type='text' id='slide_number' name='slide_number'
+					style='width: 30px; height: 60%;''>
+				<button id='first_button_id' type='button'
+					style='width: 10%; height: 96%;' onclick='on_first_click()'>
+					<i class="glyphicon glyphicon-fast-backward" title="First"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="First"></i>
+				</button>
+				<button id='prev_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_prev_click()''>
+					<i class="glyphicon glyphicon-backward" title="Prev"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Prev"></i>
+				</button>
+				<button id='next_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_next_click()''>
+					<i class="glyphicon glyphicon-forward" title="Next"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Next"></i>
+				</button>
+				<button id='last_button_id' type='button'
+					style='width: 10%; height: 96%;' ' onclick='on_last_click()''>
+					<i class="glyphicon glyphicon-fast-forward" title="Last"
+						data-placement="top" data-toggle="tooltip"
+						data-original-title="Last"></i>
+				</button>
+			</div>
+			<div id='div_screen_share' name='div_screen_share' contenteditable=''
+				style='display: block; position: absolute; width: 77%; height: 97%; top: 2% !important;'>
+				<!-- <video id='vid_screen_share' controls
+				style='position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; display: none'></video> -->
+				<img id='img_screen_share'
+					style='position: absolute; top: 0%; left: 0%; border: 1px solid #3c7a78;'></img>
+				<!-- <canvas id='canvas_screen_share'
+		style='position: static; top: 10%; left: 0%; display: none;'></canvas> -->
+				<canvas id="canvas_screen_share" width="715" height="470"
+					style="background-color: white; cursor: crosshair; border: 1px solid #3c7a78;"></canvas>
+			</div>
+		</div>
+
+		<div id="wrapper">
+			<!--Header Section Starts Here-->
+			<header class="navbar navbar-default  navbar-fixed-top">
+				<div class="container">
+					<div class="navbar-header clearfix">
+						<button aria-controls="navbar" aria-expanded="false"
+							data-target="#navbar" data-toggle="collapse"
+							class="navbar-toggle collapsed custom-togglebar  " type="button">
+							<span class="sr-only">Toggle navigation</span> <span
+								class="icon-bar"></span> <span class="icon-bar"></span> <span
+								class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#"> <image alt="Logo"
+								class="img-responsive" src="images/spanlogo.png"></image>
+						</a>
+						<div class="navbar-right user-account">
+							<ul class="nav navbar-nav">
+								<li class="dropdown"><a href="#" class="dropdown-toggle"
+									title="SuperAdmin" data-toggle="dropdown"> <img alt="Logo"
+										class="img-responsive" src="images/profile-icon.png" /> <span
+										class="hidden-xs">Tom Hardy</span><b class="caret"></b></a>
+									<ul role="menu" class="dropdown-menu">
+										<li class="dropdown-header  visible-xs">Welcome, Tom
+											Hardy</li>
+										<li><a href="#" alt="My Profile"><i
+												class="f-icon f-security-edit-profile"></i> My Profile</a></li>
+										<li><a href="#" title="Change Password"><i
+												class="f-icon f-security-change-password"></i> Change
+												Password</a></li>
+										<li><a href="#" title="Logout" onclick="return agentLogout();"><i
+												class="f-icon f-security-logout"></i> Logout</a></li>
+
+									</ul>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--Navigation Section Starts Here-->
+				<nav
+					class="navbar navbar-default navbar-static-top custom-navigation">
+					<div class="container">
+						<div class="navbar-collapse collapse navigation" id="navbar">
+							<ul class="nav navbar-nav ">
+								<li><a href="#">Home</a></li>
+								<li><a href="#">Ordering</a></li>
+								<li><a href="#">Billing</a></li>
+								<li><a href="#">My Tasks</a></li>
+							</ul>
+						</div>
+						<!--/.nav-collapse -->
+					</div>
+				</nav>
+				<!--Navigation Section Ends Here-->
+			</header>
+			<!--Header Section Ends Here-->
+			<!--login Section Starts Here-->
+			<!--POPUP-->
+			<div class="container">
+				<!-- Button trigger modal -->
+				<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> Call </button>-->
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+					aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title" id="myModalLabel"></h4>
+							</div>
+							<div class="modal-body" id="alert_content"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default"
+									data-dismiss="modal" onclick="reject_inCall();" id="reject">Reject</button>
+								<button type="button" class="btn btn-primary" id="accept"
+									onclick="accept_inCall();">Accept</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--POPUP END-->
+
+			<!--CHAT-->
+
+			<div class="popup-box chat-popup" id="qnimate">
+				<div class="popup-head">
+					<div id="chat_headername" class="popup-head-left pull-left">
+						<img src="images/profile-icon.png" alt="pawan">
+					</div>
+					<div class="popup-head-right pull-right">
+						<div class="btn-group">
+							<button class="chat-header-button" data-toggle="dropdown"
+								type="button" aria-expanded="false">
+								<i class="glyphicon glyphicon-cog"></i>
+							</button>
+							<ul role="menu" class="dropdown-menu pull-right">
+								<li><a href="#"><i class="fa fa-video-camera"></i>
+										Video Call</a></li>
+								<li><a href="#"><i class="fa fa-phone"></i> Audio Call</a></li>
+								<li><a href="#"><i class="fa fa-paperclip"></i> Send
+										File</a></li>
+								<li class="divider"></li>
+								<li><a href="#"><i class="fa fa-ban"></i> Block</a></li>
+								<li><a href="#"><i class="fa fa-eraser"></i> Clear
+										History</a></li>
+							</ul>
+						</div>
+
+						<button data-widget="remove" id="removeClass"
+							class="chat-header-button pull-right" onclick="hide_popup()"
+							type="button">
+							<i class="glyphicon glyphicon-off"></i>
+						</button>
+					</div>
+				</div>
+				<div class="popup-messages"></div>
+				<div class="popup-messages-footer">
+					<textarea id="status_message" placeholder="Type a message..."
+						rows="10" cols="40" name="message"></textarea>
+					<div class="btn-footer">
+						<button class="bg_none">
+							<i class="glyphicon glyphicon-film"></i>
+						</button>
+						<button class="bg_none">
+							<i class="glyphicon glyphicon-camera"></i>
+						</button>
+						<button class="bg_none">
+							<i class="glyphicon glyphicon-paperclip"></i>
+						</button>
+						<button class="bg_none pull-right">
+							<i class="fa fa-arrow-circle-right" onclick="sendMessage();"></i>
+						</button>
+					</div>
+				</div>
+			</div>
+
+			<!--END CHAT-->
+
+			<div class="container">
+
+				<div class="row">
+					<div class="col-md-12">
+						<div class="trends">
+							<div class="col-md-9 col-sm-9 col-xs-12 bdr_right">
+								<div class="pull-left">
+									<image alt="" class="img-responsive " src="images/profile.png"></image>
+								</div>
+								<div class="text">
+									<h1>Tom Hardy</h1>
+									<h2>Network Engineer</h2>
+									<p>
+										<i class="fa fa-phone"></i> 080 - 2332 4554
+									</p>
+									<p>
+										<i class="fa fa-mobile-phone"></i> &nbsp;98765 56789
+									</p>
+									<p>Language Known - English , French</p>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-3 col-xs-12">
+								<div class="trends_right">
+									<h3>TOTAL CALLS</h3>
+									<h2>12</h2>
+								</div>
+								<div class="trends_right">
+									<h3>RATING</h3>
+									<h2>3/5</h2>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+				<div id="agent1" style="display: block;" class="dashboard">
+					<div class="widget">
+						<div class="table-responsive">
+							<table class="table table-striped table-hover table-store">
+								<thead>
+									<tr>
+										<th class="heading" colspan="5">
+											<!--<image alt="" class="" src="images/electronic.png"></image>-->
+											<i class="fa fa-chevron-circle-left"></i> ELECTRONIC STORE
+										</th>
+									</tr>
+									<tr class="heading1">
+										<th>&nbsp;</th>
+										<th>Resolutions</th>
+										<th>Quick Response</th>
+										<th>Likes</th>
+										<th>Score</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><image alt="" class="img-responsive"
+												src="images/profile1.png"></image></td>
+										<td>15</td>
+										<td>8</td>
+										<td>6</td>
+										<td class="red">51</td>
+									</tr>
+									<tr>
+										<td><image alt="" class="img-responsive"
+												src="images/profile1.png"></image></td>
+										<td>12</td>
+										<td>4</td>
+										<td>7</td>
+										<td class="green">42</td>
+									</tr>
+									<tr>
+										<td><image alt="" class="img-responsive"
+												src="images/profile1.png"></image></td>
+										<td>8</td>
+										<td>4</td>
+										<td>5</td>
+										<td class="green">30</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="widget-foot">
+								<ul class="pagination pagination-sm pull-right">
+									<li class="disabled"><a href="#">&laquo;</a></li>
+									<li class="active"><a href="#">1</a></li>
+									<li><a href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">4</a></li>
+									<li><a href="#">&raquo;</a></li>
+								</ul>
+								<div class="clearfix"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!--Grid Section Panel Ends Here-->
+				<div id="agent2" style="display: none;">
+					<div class="videoCall">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="trends">
+									<div class="col-md-12 col-sm-12">
+										<div class="pull-left">
+											<image alt="" class="img-responsive "
+												src="images/profilepic2.png"></image>
+										</div>
+										<div class="text">
+											<h1>Karena Kane</h1>
+											<h2>Network Engineer</h2>
+											<p>
+												<i class="fa fa-phone"></i> 080 - 2332 4554
+											</p>
+											<p>
+												<i class="fa  fa-map-marker"></i> &nbsp;201 Height, London
+											</p>
+
+										</div>
+									</div>
+
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+						<div class="widget">
+
+							<div class="table-responsive">
+								<table class="table table-striped table-hover table-store">
+									<thead>
+										<tr class="heading1">
+											<th>Ticket ID</th>
+											<th>Product Brought</th>
+											<th>Complain</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>#1234</td>
+											<td>D-Link Router</td>
+											<td>Not working</td>
+										</tr>
+										<tr>
+											<td>#3456</td>
+											<td>D-Link Router</td>
+											<td>Not working</td>
+										</tr>
+									</tbody>
+								</table>
+								<div class="widget-foot">
+									<ul class="pagination pagination-sm pull-right">
+										<li class="disabled"><a href="#">&laquo;</a></li>
+										<li class="active"><a href="#">1</a></li>
+										<li><a href="#">2</a></li>
+										<li><a href="#">3</a></li>
+										<li><a href="#">4</a></li>
+										<li><a href="#">&raquo;</a></li>
+									</ul>
+									<div class="clearfix"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-12">
+						<div id="call_info" style="display: block;"
+							class="trends clearfix">
+							<div class="col-md-3 col-sm-6">
+								<div class="col_dash">
+									<h4>17</h4>
+								</div>
+								<p class="call">Number of Calls</p>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="col_dash queue">
+									<h4>03</h4>
+								</div>
+								<p class="call">Calls in Queue</p>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="col_dash attend">
+									<h4>12</h4>
+								</div>
+								<p class="call">Calls Attended</p>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="col_dash drop">
+									<h4>05</h4>
+								</div>
+								<p class="call red">Calls Dropped</p>
+							</div>
+						</div>
+						<div class="event_div">event</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+		<!--Container Section Ends Here-->
+	</div>
+
+	<!--Wrapper Section Ends Here-->
+	<!--Footer Section  Starts Here-->
+	<footer id="footer">
+		<div class="container">Copyright &copy; 2014</div>
+	</footer>
+	<!--Footer Section  Ends Here-->
+
+	<script src="js/jQuery-1.11.1-min.js"></script>
+	<script src="js/jquery-1.7.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/span_screenShare.js" type="text/javascript"></script>
+	<script>
+$(function () {
+    $("#clickshare").toggle(function () {
+        $("#clickshare").parent().animate({right:'0px'}, {queue: false, duration: 500});
+		
+    }, function () {
+        $(this).parent().animate({right:'-53%'}, {queue: false, duration: 500});
+
+	});
+   
+});
+
+$(function () {
+    $("#clickme").toggle(function () {
+	
+        $(this).parent().animate({right:'56px'}, {queue: false, duration: 500});
+    }, function () {
+        $(this).parent().animate({right:'-53%'}, {queue: false, duration: 500});
+    });
+	
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* CSS Document */
+
+.scbhidden {
+    height: 0;
+    left: -9000em;
+    overflow: hidden;
+    position: absolute;
+    top: -9000em;
+    width: 0;
+}
+.header, .container-fluid, .header-bg{
+	background-color:#434343 !important;
+}
+.header{
+	border-bottom:2px solid #000 !important;
+}
+.navbar-bg .nav > li > a {
+    color: #fff;
+}
+.dropdown a:hover {
+    color: #3c7a78 !important;
+	text-decoration:none !important;
+}
+.header-bg a, .navbar-default .navbar-nav > li > a {
+    color: #fff;
+}
+.header-bg a, .navbar-default .navbar-nav > li > a:hover {
+    text-decoration:underline;
+	color:#fff;
+}
+.glyphicon, .icon-search, .MainHead {
+    color: #3c7a78;
+}
+.custom-btn, .custom-btn:hover{
+	background-color:#3c7a78;
+}
+/*.top-space{
+	position:absolute;
+	top:66px;
+}
+.search{
+	z-index:100;
+}*/
+/*#scbsmbtopnavlt li a.scbsmbselected{color:#C00 !important;}
+a.scbsmbtoprt:focus,
+a.scbsmbtoprt:active,
+#scbsmbtopnavrt li a.scbsmbtoprt:hover,
+#scbsmbtopnavrt li a.scbsmbtoprt:hover span,
+#scbuservzfios a.signin:focus,
+#scbuservzfios a.signin:hover,
+#scbuservzfios a.scbsignin:focus,
+#scbuservzfios a.scbsignin:hover{color:#C00 !important;}
+.MainHead
+{
+	color: #3c7a78;
+}
+.scbsmbmenudiv p a:active,
+.scbsmbmenudiv p a:hover{color:#C00 !important;}
+#scbsmbtopnavlt li a.scbsmbtoplt:focus,
+#scbsmbtopnavlt li a.scbsmbtoplt:hover,
+#scbsmbtopnavlt li a.scbsmbtoplt:active{color:#c00 !important;}
+#scbsmbtopnavlt li a.scbsmbselected {
+    color: #C00 !important;
+}
+#scbsmbtopnavlt li a.scbsmbtoplt:focus,
+#scbsmbtopnavlt li a.scbsmbtoplt:hover,
+#scbsmbtopnavlt li a.scbsmbtoplt:active{color:#000 !important;text-decoration:underline;}
+a.scbsmbtoprt:focus,
+a.scbsmbtoprt:active,
+#scbsmbtopnavrt li a.scbsmbtoprt:hover,
+#scbsmbtopnavrt li a.scbsmbtoprt:hover span,
+#scbuservzfios a.signin:focus,
+#scbuservzfios a.signin:hover,
+#scbuservzfios a.scbsignin:focus,
+#scbuservzfios a.scbsignin:hover{color:#000 !important;text-decoration:underline !important;}
+.VZTS #supportnav .main li a.selected { border-bottom:6px solid #009a80; } 
+#alertmain .wider_banner .content_wrapper h3 {
+    color: #009a80;
+}
+.VZTS #supportnav .main li a:hover { border-bottom:6px solid #009a80; }
+DIV.cta_primary DIV DIV
+{
+    BACKGROUND: url(red_button_1px.gif) #009a80 repeat-x
+}
+.VZTS #supportnav .alt li a.vz_man:hover {color:#3c7a78;}
+.VZTS #supportnav .alt li a.phone_icon:hover {color:#3c7a78;}
+.VZTS .frame .column.col2 .help_col a:hover {color:#3c7a78;}
+.scbsmbmenudiv p a:active,
+.scbsmbmenudiv p a:hover{color:#3c7a78 !important;}
+DIV.cta_primary DIV A:link {
+    color: #000 !important;
+}
+#scbsmbheadercont {
+    background: none repeat scroll 0 0 #434343 !important;
+    border-bottom: 2px solid #000 !important;
+}
+.menutabtopl .menutabtopl .menutabtopr{
+	background-position:0px 0px !important;
+}
+#scbsmbtopnavrt span, .scbsmbtoprt, #signin_ws2012 a.signin, #scbuservzfios a.signin, #signin_ws2012 a.scbsignin, #scbuservzfios a.scbsignin, #scbsmbtopnavlt li a.scbsmbtoplt{
+	color:#ccc !important;
+}
+.VZTS #signin .header  {
+    background-color: #a6a6a6 !important;
+}
+.VZTS .mod_pod3 {
+    background-color: #a6a6a6 !important;
+}
+.VZTS .row.interior {
+    background-color: #ccc  !important;
+}
+.scbresvzlogo {
+    background-position: -303px -160px !important;
+    height: 110px !important;
+    width: 227px !important;
+}
+#scbresloc {
+    color: #B8FAE6 !important;
+	text-decoration:underline;
+}
+#scbsmbtopnavlt li a.scbsmbselected {
+    color: #FFF !important;
+	text-decoration:underline !important;
+}
+#LinkTo16184, #LinkTo16316, #LinkTo16344 {
+    color: #288cbf;
+}
+.menutabtopl{
+	background-image:none;
+	background-position:0px 0px !important;
+}
+.menutabtopr{
+	background-image:none;
+	background-position:0px 0px !important;
+}
+.scbsmbmenu3 {
+    background-position: -63px -111px !important;
+}
+.scbsmbmenu4 {
+    background-position: -188px -111px !important;
+}
+#scbmenuimg3:hover, #scbmenuimg3:focus{
+	background-position:-62px -140px !important
+	;
+}
+#scbmenuimg4:hover, #scbmenuimg4:focus{
+	background-position:-193px -140px !important
+	;
+}
+.scbsmbmenu1 {
+    background-position: -41px -169px !important;
+}
+.scbsmbmenu3 {
+    background-position: -62px -111px !important;
+    width: 131px !important;
+}
+.scbsmbmenu4 {
+    background-position: -193px -111px !important;
+}
+.scbsmbmenu1:hover{
+	background-position: -41px -198px !important;
+}
+*/
