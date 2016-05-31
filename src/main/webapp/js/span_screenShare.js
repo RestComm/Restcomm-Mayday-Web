@@ -817,13 +817,13 @@ document.getElementById('div_screen_share').style.top = "auto";
 var pdfShow = true;
 function showPdfScreen(){
 	if(pdfShow){
-		 $("#clickshare").parent().animate({right:'0px'}, {queue: false, duration: 500});
+		 $("#clickshare").parent().animate({left:'0px'}, {queue: false, duration: 500});
 		  $("#clickshare1").parent().animate({left:'0px'}, {queue: false, duration: 500});
 		//  $("#clickshare").parent().animate({opacity: 'show'},'slow');
 		 // $("#clickshare1").parent().animate({opacity: 'show'},'slow');
 		  pdfShow = false;
 	}else{
-		 $("#clickshare").parent().animate({right:'-63%'}, {queue: false, duration: 500});
+		 $("#clickshare").parent().animate({left:'-63%'}, {queue: false, duration: 500});
 		 $("#clickshare1").parent().animate({left:'-63%'}, {queue: false, duration: 500});
 	//	 $("#clickshare").parent().animate({opacity: 'hide'},'slow');
 	//	 $("#clickshare1").parent().animate({opacity: 'hide'},'slow');

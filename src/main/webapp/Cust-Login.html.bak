@@ -865,7 +865,7 @@ function pdfPageLoad(){
 					<div id="audio" style="display: none;">
 						<audio id="remoteAudio" autoplay
 							style="width: 100%; text-align: center; padding-left: 31%; padding-right: 30%;"></audio>
-						<audio controls id="localAudio" autoplay 
+						<audio controls id="localAudio" autoplay muted
 							style="width: 100%; text-align: center; padding-left: 31%; padding-right: 30%;"></audio>
 					</div>
 				</div>

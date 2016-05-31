@@ -112,8 +112,8 @@ function spanThemeLogin() {
 		$("#agentMainScreen").hide();
 		return;
 	}
-	$("#loginPage").hide();
-	$("#agentMainScreen").show();
+	/*$("#loginPage").hide();
+	$("#agentMainScreen").show();*/
 	if(g_username == 'alice' || g_username == 'smith'){
 		removejscssfile("js/together_canvas.js","js");
 		loadjscssfile("js/together_canvas.js","js");
@@ -122,10 +122,17 @@ function spanThemeLogin() {
 
 	spanWebrtcEventListner.onWebRTCommClientOpenedEvent = function() {
 		console.log("onWebRTCommClientOpenedEvent");
+		$("#loginPage").hide();
+
+		$("#agentMainScreen").show();
+		
 	};
 
 	spanWebrtcEventListner.onWebRTCommClientOpenErrorEvent = function(error) {
-
+		alert("Invalid Username :Enter the username or password!!");
+		$("#loginPage").show();
+		$("#agentMainScreen").hide();
+		return;
 	};
 
 	spanWebrtcEventListner.onWebRTCommClientClosedEvent = function() {
@@ -193,7 +200,7 @@ function spanThemeLogin() {
 				|| webRTCommCall.getRemoteVideoMediaStream()
 				|| webRTCommCall.getRemoteAudioMediaStream());
 
-		videoElem.muted = true;
+		//videoElem.muted = true;
 		videoElem.play();
 		document.getElementById('video-options').style.display = "block";
 	};
@@ -202,7 +209,7 @@ function spanThemeLogin() {
 
 		console.log("onWebRTCommCallHangupEvent");
 		currentCall = webRTCommCall;
-		currentCall.close();
+		currentCall.hangup();
 		/*------ for local video -----*/
 		/*var local_video=document.getElementById('localVideo');
 		local_video.src="";*/
@@ -423,7 +430,7 @@ function sendDataMessageParent(text) {
 	parent.currentCall.sendDataMessage(text);
 }
 function callHangUp() {
-	currentCall.close();
+	currentCall.hangup();
 	currentCall = undefined;
 	
 }
