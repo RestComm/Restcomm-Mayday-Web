@@ -186,6 +186,11 @@ function spanThemeLogin() {
 		var local_video=document.getElementById('localVideo');
 		local_video.src="";*/
 		/* ------------------------*/
+		if (spanCallConfiguration.localMediaStream){
+			stopStream(spanCallConfiguration.localMediaStream);
+		}else  {
+			stopStream(inCommingCallConfiguration.localMediaStream);
+		}
 		$("#agent1").show();
 		$("#agent2").hide();
 		$("#call_info").show();
@@ -209,6 +214,13 @@ function spanThemeLogin() {
 
 		console.log("onWebRTCommCallHangupEvent");
 		currentCall = webRTCommCall;
+		
+	
+		if (spanCallConfiguration.localMediaStream){
+			stopStream(spanCallConfiguration.localMediaStream);
+		}else  {
+			stopStream(inCommingCallConfiguration.localMediaStream);
+		}
 		currentCall.hangup();
 		/*------ for local video -----*/
 		/*var local_video=document.getElementById('localVideo');
@@ -430,9 +442,21 @@ function sendDataMessageParent(text) {
 	parent.currentCall.sendDataMessage(text);
 }
 function callHangUp() {
-	currentCall.hangup();
+	
+	if (spanCallConfiguration.localMediaStream){
+	 stopStream(spanCallConfiguration.localMediaStream);
+	}else  {
+		stopStream(inCommingCallConfiguration.localMediaStream);
+	}
+	 currentCall.hangup();
 	currentCall = undefined;
 	
+}
+function stopStream(stream) {
+	//alert('stop called');
+	stream.getTracks().forEach(function (track) {
+	    track.stop();
+	});
 }
 var string, mainstring;
 function createModal(s1, s2) {
