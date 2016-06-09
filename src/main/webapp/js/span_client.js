@@ -76,6 +76,7 @@ var g_contact;
 var g_pwd;
 var g_domain;
 var g_port;
+var currentCall;
 
 function signIn() {
 	g_username = $("#username").val();
@@ -112,20 +113,25 @@ function spanThemeLogin() {
 		$("#agentMainScreen").hide();
 		return;
 	}
+	
 	/*$("#loginPage").hide();
 	$("#agentMainScreen").show();*/
-	if(g_username == 'alice' || g_username == 'smith'){
+	
+	/*if(g_username == 'alice' || g_username == 'smith'){
 		removejscssfile("js/together_canvas.js","js");
 		loadjscssfile("js/together_canvas.js","js");
-	}
+	}*/
 	spanWebrtcEventListner = new WebRTCommCallEventListenerInterface();
 
 	spanWebrtcEventListner.onWebRTCommClientOpenedEvent = function() {
 		console.log("onWebRTCommClientOpenedEvent");
 		$("#loginPage").hide();
-
 		$("#agentMainScreen").show();
 		
+		if(g_username == 'alice' || g_username == 'smith'){
+			removejscssfile("js/together_canvas.js","js");
+			loadjscssfile("js/together_canvas.js","js");
+		}
 	};
 
 	spanWebrtcEventListner.onWebRTCommClientOpenErrorEvent = function(error) {
@@ -207,6 +213,7 @@ function spanThemeLogin() {
 
 		//videoElem.muted = true;
 		videoElem.play();
+		document.getElementsByClassName("hide_pdf_share")[1].style.display="block";
 		document.getElementById('video-options').style.display = "block";
 	};
 
@@ -222,6 +229,7 @@ function spanThemeLogin() {
 			stopStream(inCommingCallConfiguration.localMediaStream);
 		}
 		currentCall.hangup();
+		document.getElementsByClassName("hide_pdf_share")[1].style.display="none";
 		/*------ for local video -----*/
 		/*var local_video=document.getElementById('localVideo');
 		local_video.src="";*/
@@ -238,7 +246,7 @@ function spanThemeLogin() {
 
 		$("#chat_popup").click();
 		responseMessage(message.from, message.text);
-
+ 
 	};
 
 	spanWebrtcEventListner.onWebRTCommMessageSentEvent = function(message) {
@@ -276,6 +284,7 @@ function spanThemeLogin() {
 				sessionStorage.setItem("coBrowsingUrl",jsonresp.content);
 				$('.expand-icon').trigger('click');
 				updateCoBrowserLink(true);
+				
 			}
 		}else if (jsonresp.type == "updateCanvas") {
 			console.log("Received message to update the Canvas. isEnabled ? " + jsonresp.canvasEnabled);
@@ -449,6 +458,7 @@ function callHangUp() {
 		stopStream(inCommingCallConfiguration.localMediaStream);
 	}
 	 currentCall.hangup();
+	document.getElementsByClassName("hide_pdf_share")[1].style.display="none";
 	currentCall = undefined;
 	
 }
