@@ -569,12 +569,17 @@ function removejscssfile(filename, filetype){
 
 function logout() {
 	isLogOutClicked = true;
+	callHangUp();
 	stopTogetherJS();
 	sessionStorage.removeItem("username");
 	sessionStorage.removeItem("password");
 	sessionStorage.removeItem("isCanvasEnabled");
 	sessionStorage.removeItem("togetherjs-session.status");
 	sessionStorage.removeItem("togetherjs-session.peerCache");
+	localStorage.removeItem("togetherjs.settings.name");
+	localStorage.removeItem("togetherjs.settings.defaultName");
+	localStorage.removeItem("togetherjs.settings.color");
+	localStorage.removeItem("togetherjs.identityId");
 	window.location.reload();
 	
 	console.log('Session Cleared and closed');
@@ -583,6 +588,7 @@ function logout() {
 function agentLogout() {
 	isLogOutClicked = true;
 	// TODO Clear Media resouces if Call exists
+	callHangUp();
 	stopTogetherJS();
 	sessionStorage.removeItem("sessionId");
 	sessionStorage.removeItem("coBrowsingUrl");
@@ -592,6 +598,10 @@ function agentLogout() {
 	sessionStorage.removeItem("username");
 	sessionStorage.removeItem("password");
 	sessionStorage.removeItem("togetherjs-session.peerCache");
+	localStorage.removeItem("togetherjs.settings.name");
+	localStorage.removeItem("togetherjs.settings.defaultName");
+	localStorage.removeItem("togetherjs.settings.color");
+	localStorage.removeItem("togetherjs.identityId");
 	window.location.reload();
 	console.log('Session Cleared and closed');
 }
