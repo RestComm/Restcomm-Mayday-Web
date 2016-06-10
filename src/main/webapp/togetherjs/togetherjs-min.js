@@ -22,7 +22,7 @@
     // The base URL of the hub (gets filled in below):
     hubBase: null,
     // A function that will return the name of the user:
-    getUserName: null,
+    getUserName: function () {return (g_username +"   ");},
     // A function that will return the color of the user:
     getUserColor: "black",
     // A function that will return the avatar of the user:
